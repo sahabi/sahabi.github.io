@@ -1,1 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-12-04T23:31:39-06:00</updated><id>http://localhost:4000/</id><title type="html">CS Flaneur</title><subtitle></subtitle></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-12-05T00:10:38-06:00</updated><id>http://localhost:4000/</id><title type="html">CS Flaneur</title><subtitle></subtitle><entry><title type="html">Bitcoin Transaction Fee Estimation</title><link href="http://localhost:4000/bitcoin/fees/haskell/finance/2017/12/04/Bitcoin-Fees-Estimation.html" rel="alternate" type="text/html" title="Bitcoin Transaction Fee Estimation" /><published>2017-12-04T22:09:54-06:00</published><updated>2017-12-04T22:09:54-06:00</updated><id>http://localhost:4000/bitcoin/fees/haskell/finance/2017/12/04/Bitcoin-Fees-Estimation</id><content type="html" xml:base="http://localhost:4000/bitcoin/fees/haskell/finance/2017/12/04/Bitcoin-Fees-Estimation.html">&lt;p&gt;The objective is to develop an web-based, interactive bitcoin transaction fee estimator based on bitcoin core 0.14 implementation. Thanks to the excellent blog post by newburry and the orignal document, I’m saved from needing to read the original implementation.&lt;/p&gt;
+
+&lt;p&gt;In this post, I will cover the overall system architecture as well as the implementation details of the system’s components which basically code written in Haskell.&lt;/p&gt;
+
+&lt;h3 id=&quot;objective&quot;&gt;Objective&lt;/h3&gt;
+
+&lt;p&gt;We want to find the fee rate that you should use to in order for your 
+tx to be included in the blockchain within a given target number of blocks.&lt;/p&gt;
+
+&lt;h3 id=&quot;development-plan&quot;&gt;Development Plan&lt;/h3&gt;
+
+&lt;p&gt;To achieve the above objective, we return the lowest fee rate that will 
+with high probability (%95) achieves the objective.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;build a priodic process for updating the fee buckets:&lt;/p&gt;
+
+    &lt;p&gt;forever:
+ fetch the height of the last checked block from the db table&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;fetch the most recent block from RPC&lt;/li&gt;
+  &lt;li&gt;fetch the mempool from RPC&lt;/li&gt;
+  &lt;li&gt;fetch the unconfirmed tx from db table&lt;/li&gt;
+  &lt;li&gt;is the most recent block is heigher than the last checked block?
+    &lt;ul&gt;
+      &lt;li&gt;if yes:&lt;/li&gt;
+      &lt;li&gt;any transaction in the unconf tx was confirmed in the most recent block?&lt;/li&gt;
+      &lt;li&gt;if yes: update bucket with the new confirmed transactions&lt;/li&gt;
+      &lt;li&gt;if no: pass&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;if no: pass&lt;/li&gt;
+  &lt;li&gt;delete mempool tx db table enteries&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;insert new mempool tx to db table&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;build the ui&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;deploy the website&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;testing-plan&quot;&gt;Testing Plan&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Make sure the inserting confirmed tx do not duplicate&lt;/li&gt;
+  &lt;li&gt;Make sure the inserting unconfirmed tx do not duplicate&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">The objective is to develop an web-based, interactive bitcoin transaction fee estimator based on bitcoin core 0.14 implementation. Thanks to the excellent blog post by newburry and the orignal document, I’m saved from needing to read the original implementation.</summary></entry></feed>
