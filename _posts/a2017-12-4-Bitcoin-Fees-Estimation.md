@@ -5,6 +5,10 @@ date:   2017-12-04 22:09:54 -0600
 categories: bitcoin fees haskell finance
 ---
 
+The objective is to develop an web-based, interactive bitcoin transaction fee estimator based on bitcoin core 0.14 implementation. Thanks to the excellent blog post by newburry and the orignal document, I'm saved from needing to read the original implementation.  
+
+In this post, I will cover the overall system architecture as well as the implementation details of the system's components which basically code written in Haskell.
+
 ### Objective
 
 We want to find the fee rate that you should use to in order for your 
